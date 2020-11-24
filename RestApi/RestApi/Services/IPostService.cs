@@ -8,9 +8,10 @@ namespace RestApi.Services
 {
     public interface IPostService
     {
-        List<Post> GetPosts();
-        Post GetPostbyId(Guid postId);
-        bool UpdatePost(Post postToUpdate);
-        bool DeletePost(Guid postId);
+        Task<List<Post>> GetPostsAsync();
+        Task<Post> GetPostbyIdAsync(Guid postId);
+        Task<bool> CreatePostAsync(Post post);
+        Task<bool> UpdatePostAsync(Post postToUpdate);
+        Task<bool> DeletePostAsync(Guid postId);
     }
 }
