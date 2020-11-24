@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RestApi.Contracts
+namespace RestApi.Contracts.v1
 {
     public static class ApiRoutes
     {
@@ -13,6 +13,8 @@ namespace RestApi.Contracts
         public static class Posts
         {
             public const string GetAll = Base + "/posts";
+            public const string Create = Base + "/posts";
+            public const string Get = Base + "/posts/{postId}";
         }
     }
 }
