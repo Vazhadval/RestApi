@@ -21,6 +21,19 @@ namespace RestApi.Services
                 });
             }
         }
+
+        public bool DeletePost(Guid postId)
+        {
+            var post = GetPostbyId(postId);
+
+            if (post == null)
+            {
+                return false;
+            }
+            _posts.Remove(post);
+            return true;
+        }
+
         public Post GetPostbyId(Guid postId)
         {
             return _posts.SingleOrDefault(x => x.Id == postId);

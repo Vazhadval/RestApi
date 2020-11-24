@@ -11,5 +11,6 @@ namespace RestApi.Services
         List<Post> GetPosts();
         Post GetPostbyId(Guid postId);
         bool UpdatePost(Post postToUpdate);
+        bool DeletePost(Guid postId);
     }
 }
