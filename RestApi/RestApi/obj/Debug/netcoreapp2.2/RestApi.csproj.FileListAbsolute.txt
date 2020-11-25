@@ -8,7 +8,6 @@ C:\Users\vazha.dvalishvili\Desktop\RestApi\RestApi\RestApi\bin\Debug\netcoreapp2
 C:\Users\vazha.dvalishvili\Desktop\RestApi\RestApi\RestApi\bin\Debug\netcoreapp2.2\RestApi.runtimeconfig.dev.json
 C:\Users\vazha.dvalishvili\Desktop\RestApi\RestApi\RestApi\bin\Debug\netcoreapp2.2\RestApi.dll
 C:\Users\vazha.dvalishvili\Desktop\RestApi\RestApi\RestApi\bin\Debug\netcoreapp2.2\RestApi.pdb
-C:\Users\vazha.dvalishvili\Desktop\RestApi\RestApi\RestApi\obj\Debug\netcoreapp2.2\RestApi.csprojAssemblyReference.cache
 C:\Users\vazha.dvalishvili\Desktop\RestApi\RestApi\RestApi\obj\Debug\netcoreapp2.2\RestApi.AssemblyInfoInputs.cache
 C:\Users\vazha.dvalishvili\Desktop\RestApi\RestApi\RestApi\obj\Debug\netcoreapp2.2\RestApi.AssemblyInfo.cs
 C:\Users\vazha.dvalishvili\Desktop\RestApi\RestApi\RestApi\obj\Debug\netcoreapp2.2\RestApi.RazorAssemblyInfo.cache
@@ -35,3 +34,4 @@ E:\Projects\C# Projects\RestApi\RestApi\RestApi\obj\Debug\netcoreapp2.2\RestApi.
 E:\Projects\C# Projects\RestApi\RestApi\RestApi\obj\Debug\netcoreapp2.2\RestApi.dll
 E:\Projects\C# Projects\RestApi\RestApi\RestApi\obj\Debug\netcoreapp2.2\RestApi.pdb
 E:\Projects\C# Projects\RestApi\RestApi\RestApi\obj\Debug\netcoreapp2.2\RestApi.genruntimeconfig.cache
+C:\Users\vazha.dvalishvili\Desktop\RestApi\RestApi\RestApi\obj\Debug\netcoreapp2.2\RestApi.csprojAssemblyReference.cache

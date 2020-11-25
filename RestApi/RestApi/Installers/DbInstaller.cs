@@ -13,12 +13,12 @@ namespace RestApi.Installers
         {
             services.AddDbContext<DataContext>(options =>
                options.UseSqlServer(
-                   configuration.GetConnectionString("DefaultConnection")));
+                   configuration.GetConnectionString("LocalDbConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<DataContext>();
 
-            //services.AddScoped<IPostService, PostService>();
-            services.AddSingleton<IPostService, CosmosPostService>();
+            services.AddScoped<IPostService, PostService>();
+            //services.AddSingleton<IPostService, CosmosPostService>();
         }
     }
 }
