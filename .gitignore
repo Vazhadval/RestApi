@@ -1,3 +1,4 @@
 RestApi/RestApi/bin
 RestApi/RestApi/obj/
 *.suo
+RestApi/.vs/
