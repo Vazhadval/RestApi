@@ -3,7 +3,6 @@ using RestApi.Data;
 using RestApi.Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RestApi.Services
@@ -51,6 +50,14 @@ namespace RestApi.Services
             _dataContext.Posts.Remove(post);
             int deleted = await _dataContext.SaveChangesAsync();
             return deleted > 0;
+        }
+
+        public async Task<bool> UserOwnsPostAsyn(Guid postId, string userId)
+        {
+            var post = await _dataContext.Posts.AsNoTracking().SingleOrDefaultAsync(x => x.Id == postId);
+            if (post == null) return false;
+
+            return post.UserId == userId;
         }
     }
 }
