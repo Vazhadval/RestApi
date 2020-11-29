@@ -13,7 +13,7 @@ namespace RestApi.Installers
         {
             services.AddDbContext<DataContext>(options =>
                options.UseSqlServer(
-                   configuration.GetConnectionString("LocalDbConnection")));
+                   configuration.GetConnectionString("DockerConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<DataContext>();
 
