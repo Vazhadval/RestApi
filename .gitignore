@@ -1,3 +1,5 @@
 RestApi/RestApi/bin
 RestApi/RestApi/obj/
 *.suo
+RestApi/.idea/
+RestApi/.vs/
