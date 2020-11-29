@@ -1,7 +1,6 @@
 ﻿using RestApi.Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RestApi.Services
@@ -13,5 +12,6 @@ namespace RestApi.Services
         Task<bool> CreatePostAsync(Post post);
         Task<bool> UpdatePostAsync(Post postToUpdate);
         Task<bool> DeletePostAsync(Guid postId);
+        Task<bool> UserOwnsPostAsyn(Guid postId, string userId);
     }
 }

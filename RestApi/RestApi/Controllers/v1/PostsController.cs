@@ -5,6 +5,7 @@ using RestApi.Contracts.v1;
 using RestApi.Contracts.v1.Requests;
 using RestApi.Contracts.v1.Responses;
 using RestApi.Domain;
+using RestApi.Extensions;
 using RestApi.Services;
 using System;
 using System.Threading.Tasks;
@@ -38,7 +39,11 @@ namespace RestApi.Controllers.v1
         [HttpPost(ApiRoutes.Posts.Create)]
         public async Task<IActionResult> Create([FromBody] CreatePostRequest postRequest)
         {
-            var post = new Post { Name = postRequest.Name };
+            var post = new Post
+            {
+                Name = postRequest.Name,
+                UserId = HttpContext.GetUserId()
+            };
 
             await _postService.CreatePostAsync(post);
 
@@ -52,11 +57,14 @@ namespace RestApi.Controllers.v1
         [HttpPut(ApiRoutes.Posts.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid postId, [FromBody] UpdatePostRequest request)
         {
-            var post = new Post
+            var userOwnsPost = await _postService.UserOwnsPostAsyn(postId, HttpContext.GetUserId());
+            if (!userOwnsPost)
             {
-                Id = postId,
-                Name = request.Name
-            };
+                return BadRequest(new { error = "Your do not own this post" });
+            }
+
+            var post = await _postService.GetPostbyIdAsync(postId);
+            post.Name = request.Name;
 
             var updated = await _postService.UpdatePostAsync(post);
 
@@ -68,6 +76,11 @@ namespace RestApi.Controllers.v1
         [HttpDelete(ApiRoutes.Posts.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid postId)
         {
+            var userOwnsPost = await _postService.UserOwnsPostAsyn(postId, HttpContext.GetUserId());
+            if (!userOwnsPost)
+            {
+                return BadRequest(new { error = "Your do not own this post" });
+            }
             var deleted = await _postService.DeletePostAsync(postId);
 
             if (deleted) return NoContent();

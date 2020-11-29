@@ -60,5 +60,10 @@ namespace RestApi.Services
             var response = await _cosmosStore.UpdateAsync(cosmosPost);
             return response.IsSuccess;
         }
+
+        public Task<bool> UserOwnsPostAsyn(Guid postId, string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
