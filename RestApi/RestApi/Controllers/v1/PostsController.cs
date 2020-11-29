@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RestApi.Contracts.v1;
 using RestApi.Contracts.v1.Requests;
 using RestApi.Contracts.v1.Responses;
@@ -8,11 +6,12 @@ using RestApi.Domain;
 using RestApi.Extensions;
 using RestApi.Services;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RestApi.Controllers.v1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PostsController : Controller
     {
         private readonly IPostService _postService;
@@ -42,8 +41,10 @@ namespace RestApi.Controllers.v1
             var post = new Post
             {
                 Name = postRequest.Name,
-                UserId = HttpContext.GetUserId()
+                UserId = HttpContext.GetUserId(),
+                Tags = postRequest.Tags.Select(x => new Tag { Name = x.Name }).ToList()
             };
+
 
             await _postService.CreatePostAsync(post);
 

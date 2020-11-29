@@ -17,7 +17,7 @@ namespace RestApi.Services
         }
         public async Task<List<Post>> GetPostsAsync()
         {
-            return await _dataContext.Posts.ToListAsync();
+            return await _dataContext.Posts.Include(x => x.Tags).ToListAsync();
         }
 
         public async Task<Post> GetPostbyIdAsync(Guid postId)
@@ -58,6 +58,18 @@ namespace RestApi.Services
             if (post == null) return false;
 
             return post.UserId == userId;
+        }
+
+        public async Task<List<Tag>> GetTagsAsync()
+        {
+            return await _dataContext.Tags.ToListAsync();
+        }
+
+        public async Task<bool> CreateTagAsync(Tag tag)
+        {
+            await _dataContext.Tags.AddAsync(tag);
+            int created = await _dataContext.SaveChangesAsync();
+            return created > 0;
         }
     }
 }
