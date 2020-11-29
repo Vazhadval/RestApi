@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RestApi.Options;
 using RestApi.Installers;
-using System;
+using RestApi.Options;
 
 namespace RestApi
 {
@@ -57,6 +55,7 @@ namespace RestApi
 
 
             app.UseMvc();
+
         }
     }
 }

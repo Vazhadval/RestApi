@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using RestApi.Data;
 using System.Threading.Tasks;
 
 namespace RestApi
@@ -13,11 +10,11 @@ namespace RestApi
         {
             var host = CreateWebHostBuilder(args).Build();
 
-            using (var serviceScope = host.Services.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
-                await dbContext.Database.MigrateAsync();
-            }
+            //using (var serviceScope = host.Services.CreateScope())
+            //{
+            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
+            //    await dbContext.Database.MigrateAsync();
+            //}
 
             await host.RunAsync();
         }

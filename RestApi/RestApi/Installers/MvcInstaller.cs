@@ -21,7 +21,7 @@ namespace RestApi.Installers
 
             services.AddScoped<IIdentityService, IdentityService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(o => o.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var tokenValidationParameters = new TokenValidationParameters
             {
