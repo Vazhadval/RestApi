@@ -6,15 +6,17 @@ using RestApi.Contracts.v1;
 using RestApi.Contracts.v1.Requests;
 using RestApi.Contracts.v1.Responses;
 using RestApi.Data;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace RestApi.IntegrationTests
 {
-    public class IntegrationTest
+    public class IntegrationTest : IDisposable
     {
         protected readonly HttpClient TestClient;
+        private readonly IServiceProvider _serviceProvider;
         protected IntegrationTest()
         {
             var appFactory = new WebApplicationFactory<Startup>()
@@ -29,7 +31,15 @@ namespace RestApi.IntegrationTests
                            });
                        });
                    });
+            _serviceProvider = appFactory.Services;
             TestClient = appFactory.CreateClient();
+        }
+
+        public void Dispose()
+        {
+            using var serviceScope = _serviceProvider.CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<DataContext>();
+            context.Database.EnsureDeleted();
         }
 
         protected async Task AuthenticateAsync()

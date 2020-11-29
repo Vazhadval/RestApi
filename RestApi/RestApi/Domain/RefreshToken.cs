@@ -8,6 +8,7 @@ namespace RestApi.Domain
     public class RefreshToken
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Token { get; set; }
         public string JwtId { get; set; }
         public DateTime CreationDate { get; set; }

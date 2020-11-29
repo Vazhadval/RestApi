@@ -4,3 +4,5 @@ RestApi/RestApi/obj/
 
 RestApi/.idea/
 RestApi/.vs/
+RestApi/RestApi.IntegrationTests/bin/
+RestApi/RestApi.IntegrationTests/obj/
