@@ -71,5 +71,23 @@ namespace RestApi.Services
             int created = await _dataContext.SaveChangesAsync();
             return created > 0;
         }
+
+        public async Task<Tag> GetTagByNameAsync(string tagName)
+        {
+            return await _dataContext.Tags.FirstOrDefaultAsync(x => x.Name == tagName);
+        }
+
+        public async Task<bool> DeleteTagAsync(string tagName)
+        {
+            var tag = await GetTagByNameAsync(tagName);
+            if (tag == null)
+            {
+                return false;
+            }
+
+            _dataContext.Tags.Remove(tag);
+            int deleted = await _dataContext.SaveChangesAsync();
+            return deleted > 0;
+        }
     }
 }

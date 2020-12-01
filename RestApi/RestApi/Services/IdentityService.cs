@@ -50,6 +50,7 @@ namespace RestApi.Services
                 };
             }
 
+
             return await GenerateAuthenticationResultForUserAsync(user);
         }
 
@@ -137,7 +138,6 @@ namespace RestApi.Services
                 };
             }
 
-            await _userManager.AddClaimAsync(newUser, new Claim("tags.view", "true"));
 
             return await GenerateAuthenticationResultForUserAsync(newUser);
         }

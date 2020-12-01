@@ -8,5 +8,7 @@ namespace RestApi.Domain
         [Key]
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string CreatorId { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

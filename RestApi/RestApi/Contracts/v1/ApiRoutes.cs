@@ -25,6 +25,9 @@ namespace RestApi.Contracts.v1
         public static class Tags
         {
             public const string GetAll = Base + "/tags";
+            public const string Get = Base + "/tags/{tagName}";
+            public const string Create = Base + "/tags";
+            public const string Delete = Base + "/tags/{tagName}";
         }
     }
 }

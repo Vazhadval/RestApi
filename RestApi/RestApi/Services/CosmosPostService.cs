@@ -40,6 +40,11 @@ namespace RestApi.Services
             return response.IsSuccess;
         }
 
+        public Task<bool> DeleteTagAsync(string tagName)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Post> GetPostbyIdAsync(Guid postId)
         {
             var post = await _cosmosStore.FindAsync(postId.ToString());
@@ -52,6 +57,11 @@ namespace RestApi.Services
             var posts = await _cosmosStore.Query().ToListAsync();
 
             return posts.Select(x => new Post { Id = Guid.Parse(x.Id), Name = x.Name }).ToList();
+        }
+
+        public Task<Tag> GetTagByNameAsync(string tagName)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<List<Tag>> GetTagsAsync()
