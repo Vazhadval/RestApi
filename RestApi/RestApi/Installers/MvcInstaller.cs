@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestApi.Authorization;
+using RestApi.Filters;
 using RestApi.Options;
 using RestApi.Services;
 using System.Collections.Generic;
@@ -23,7 +25,14 @@ namespace RestApi.Installers
 
             services.AddScoped<IIdentityService, IdentityService>();
 
-            services.AddMvc(o => o.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services
+                 .AddMvc(options =>
+                 {
+                     options.EnableEndpointRouting = false;
+                     options.Filters.Add<ValidationFilter>();
+                 })
+                 .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>())
+                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             var tokenValidationParameters = new TokenValidationParameters
             {

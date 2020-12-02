@@ -48,6 +48,11 @@ namespace RestApi.Controllers.v1
         [HttpPost(ApiRoutes.Tags.Create)]
         public async Task<IActionResult> Create([FromBody] CreateTagRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+
+            }
+
             var newTag = new Tag
             {
                 Name = request.Name,
