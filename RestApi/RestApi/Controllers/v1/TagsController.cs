@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestApi.Contracts.v1;
 using RestApi.Contracts.v1.Requests;
+using RestApi.Contracts.v1.Responses;
 using RestApi.Domain;
 using RestApi.Extensions;
 using RestApi.Services;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RestApi.Controllers.v1
@@ -15,15 +19,18 @@ namespace RestApi.Controllers.v1
     public class TagsController : Controller
     {
         private readonly IPostService _postService;
-        public TagsController(IPostService postService)
+        private readonly IMapper _mapper;
+        public TagsController(IPostService postService, IMapper mapper)
         {
             _postService = postService;
+            _mapper = mapper;
         }
 
         [HttpGet(ApiRoutes.Tags.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _postService.GetTagsAsync());
+            var tags = await _postService.GetTagsAsync();
+            return Ok(_mapper.Map<List<TagResponse>>(tags));
         }
 
         [HttpGet(ApiRoutes.Tags.Get)]
@@ -35,7 +42,7 @@ namespace RestApi.Controllers.v1
                 return NotFound();
             }
 
-            return Ok(tag);
+            return Ok(_mapper.Map<TagResponse>(tag));
         }
 
         [HttpPost(ApiRoutes.Tags.Create)]
@@ -56,7 +63,8 @@ namespace RestApi.Controllers.v1
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locaationUri = baseUrl + "/" + ApiRoutes.Tags.Get.Replace("{tagName}", newTag.Name);
-            return Created(locaationUri, newTag);
+
+            return Created(locaationUri, _mapper.Map<TagResponse>(newTag));
         }
 
         [HttpDelete(ApiRoutes.Tags.Delete)]
