@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RestApi.Controllers.v1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Poster")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class TagsController : Controller
     {
         private readonly IPostService _postService;
@@ -39,7 +39,7 @@ namespace RestApi.Controllers.v1
         }
 
         [HttpPost(ApiRoutes.Tags.Create)]
-        public async Task<IActionResult> Create([FromRoute] CreateTagRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateTagRequest request)
         {
             var newTag = new Tag
             {
@@ -60,8 +60,8 @@ namespace RestApi.Controllers.v1
         }
 
         [HttpDelete(ApiRoutes.Tags.Delete)]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete([FromRoute] string tagName)
+        [Authorize(policy: "MustWorkForMyCompany")]
+        public async Task<IActionResult> Delete(string tagName)
         {
             var deleted = await _postService.DeleteTagAsync(tagName);
             if (deleted)

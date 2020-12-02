@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RestApi.Authorization;
 using RestApi.Options;
 using RestApi.Services;
 using System.Collections.Generic;
@@ -47,7 +49,15 @@ namespace RestApi.Installers
                    x.TokenValidationParameters = tokenValidationParameters;
                });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MustWorkForMyCompany", policy =>
+                {
+                    policy.AddRequirements(new WorksForCompanyRequirement("vazha.com"));
+                });
+            });
+
+            services.AddSingleton<IAuthorizationHandler, WorksForCompanyHandler>();
 
             services.AddSwaggerGen(x =>
             {
