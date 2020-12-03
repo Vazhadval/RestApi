@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 namespace RestApi.Controllers.v1
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Produces("application/json")]
     public class TagsController : Controller
     {
         private readonly IPostService _postService;
@@ -25,7 +26,10 @@ namespace RestApi.Controllers.v1
             _postService = postService;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// Returns all the tags in the system
+        /// </summary>
+        /// <response code="200">Returns all the tags in the system</response>
         [HttpGet(ApiRoutes.Tags.GetAll)]
         public async Task<IActionResult> GetAll()
         {
@@ -45,6 +49,13 @@ namespace RestApi.Controllers.v1
             return Ok(_mapper.Map<TagResponse>(tag));
         }
 
+        /// <summary>
+        /// Creates a tag in the system
+        /// </summary>
+        /// <response code="201">Returns all the tags in the system</response>
+        /// <response code="400">Unable to create the tag doe to validation error</response>
+        [ProducesResponseType(typeof(TagResponse), 201)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         [HttpPost(ApiRoutes.Tags.Create)]
         public async Task<IActionResult> Create([FromBody] CreateTagRequest request)
         {
@@ -63,7 +74,7 @@ namespace RestApi.Controllers.v1
             var created = await _postService.CreateTagAsync(newTag);
             if (!created)
             {
-                return BadRequest(new { error = "Unable to create tag" });
+                return BadRequest(new ErrorResponse { Errors = new List<ErrorModel> { new ErrorModel { Message = "Unable to create tag" } } });
             }
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
