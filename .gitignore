@@ -6,3 +6,11 @@ RestApi/.idea/
 RestApi/.vs/
 RestApi/RestApi.IntegrationTests/bin/
 RestApi/RestApi.IntegrationTests/obj/
+RestApi/RestApi.Contracts/bin/Debug/netstandard2.0/RestApi.Contracts.deps.json
+RestApi/RestApi.Contracts/bin/Debug/netstandard2.0/RestApi.Contracts.dll
+RestApi/RestApi.Contracts/bin/
+RestApi/RestApi.Contracts/obj/
+RestApi/RestApi.Sdk.Sample/obj/
+RestApi/RestApi.Sdk/obj/
+RestApi/RestApi.Sdk/bin/
+RestApi/RestApi.Sdk.Sample/bin/
