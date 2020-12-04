@@ -33,10 +33,11 @@ namespace RestApi.Controllers.v1
         }
 
         [HttpGet(ApiRoutes.Posts.GetAll)]
-        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllPostsQuery query, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var posts = await _postService.GetPostsAsync(pagination);
+            var filter = _mapper.Map<GetAllPostsFilter>(query);
+            var posts = await _postService.GetPostsAsync(filter, pagination);
 
             var postsResponse = _mapper.Map<List<PostResponse>>(posts);
 
@@ -113,13 +114,6 @@ namespace RestApi.Controllers.v1
             if (deleted) return NoContent();
 
             return NotFound();
-
-
         }
-
-
-
-
-
     }
 }
