@@ -3,6 +3,7 @@ using RestApi.Data;
 using RestApi.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RestApi.Services
@@ -15,9 +16,20 @@ namespace RestApi.Services
         {
             _dataContext = dataContext;
         }
-        public async Task<List<Post>> GetPostsAsync()
+        public async Task<List<Post>> GetPostsAsync(PaginationFilter paginationFilter = null)
         {
-            return await _dataContext.Posts.Include(x => x.Tags).ToListAsync();
+            if (paginationFilter == null)
+            {
+                return await _dataContext.Posts.Include(x => x.Tags).ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+
+            return await _dataContext.Posts.Include(x => x.Tags)
+                .Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
+
         }
 
         public async Task<Post> GetPostbyIdAsync(Guid postId)

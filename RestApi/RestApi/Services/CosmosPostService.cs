@@ -52,7 +52,7 @@ namespace RestApi.Services
             return new Post { Id = Guid.Parse(post.Id), Name = post.Name };
         }
 
-        public async Task<List<Post>> GetPostsAsync()
+        public async Task<List<Post>> GetPostsAsync(PaginationFilter paginationFilter)
         {
             var posts = await _cosmosStore.Query().ToListAsync();
 

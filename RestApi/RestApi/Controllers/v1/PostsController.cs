@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using RestApi.Cache;
+using RestApi.Contracts.v1.Requests.Queries;
+using RestApi.Helpers;
 
 namespace RestApi.Controllers.v1
 {
@@ -21,17 +23,30 @@ namespace RestApi.Controllers.v1
     {
         private readonly IPostService _postService;
         private readonly IMapper _mapper;
-        public PostsController(IPostService postService, IMapper mapper)
+        private readonly IUriService _uriService;
+
+        public PostsController(IPostService postService, IMapper mapper, IUriService uriService)
         {
             _postService = postService;
             _mapper = mapper;
+            _uriService = uriService;
         }
 
         [HttpGet(ApiRoutes.Posts.GetAll)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
-            var posts = await _postService.GetPostsAsync();
-            return Ok(_mapper.Map<List<PostResponse>>(posts));
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var posts = await _postService.GetPostsAsync(pagination);
+
+            var postsResponse = _mapper.Map<List<PostResponse>>(posts);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<PostResponse>(postsResponse));
+            }
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, postsResponse);
+
+            return Ok(paginationResponse);
         }
 
         [HttpGet(ApiRoutes.Posts.Get)]
@@ -41,7 +56,7 @@ namespace RestApi.Controllers.v1
             var post = await _postService.GetPostbyIdAsync(postId);
 
             if (post == null) return NotFound();
-            return Ok(_mapper.Map<PostResponse>(post));
+            return Ok(new Response<PostResponse>(_mapper.Map<PostResponse>(post)));
         }
 
         [HttpPost(ApiRoutes.Posts.Create)]
@@ -58,10 +73,9 @@ namespace RestApi.Controllers.v1
 
             await _postService.CreatePostAsync(post);
 
-            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var locationUri = baseUrl + "/" + ApiRoutes.Posts.Get.Replace("{postId}", post.Id.ToString());
+            var locationUri = _uriService.GetPostUri(post.Id.ToString());
 
-            return Created(locationUri, _mapper.Map<PostResponse>(post));
+            return Created(locationUri, new Response<PostResponse>(_mapper.Map<PostResponse>(post)));
         }
 
         [HttpPut(ApiRoutes.Posts.Update)]
@@ -80,7 +94,7 @@ namespace RestApi.Controllers.v1
 
             if (updated)
             {
-                return Ok(_mapper.Map<PostResponse>(post));
+                return Ok(new Response<PostResponse>(_mapper.Map<PostResponse>(post)));
             }
 
             return NotFound();
