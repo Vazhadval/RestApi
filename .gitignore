@@ -16,3 +16,4 @@ RestApi/RestApi.Sdk/bin/
 RestApi/RestApi.Sdk.Sample/bin/
 RestApi/RestApi.Web/obj/
 RestApi/RestApi.Web/bin/
+RestApi/RestApi/appsettings.json
