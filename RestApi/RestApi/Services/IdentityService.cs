@@ -20,14 +20,16 @@ namespace RestApi.Services
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly DataContext _context;
+        private readonly IFacebookAuthService _facebookAuthService;
 
 
-        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters, DataContext context)
+        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters, DataContext context, IFacebookAuthService facebookAuthService)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
             _tokenValidationParameters = tokenValidationParameters;
             _context = context;
+            _facebookAuthService = facebookAuthService;
         }
 
         public async Task<AuthenticationResult> LoginAsync(string email, string password)
@@ -212,5 +214,42 @@ namespace RestApi.Services
             };
         }
 
+        public async Task<AuthenticationResult> LoginWithFacebookAsync(string accessToken)
+        {
+            var validatedTokenResult = await _facebookAuthService.ValidateAccessTokenAsync(accessToken);
+            if (!validatedTokenResult.Data.IsValid)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] { "Invalid facebook token" }
+                };
+            }
+
+            var userInfo = await _facebookAuthService.GetUserInfoAsync(accessToken);
+
+            var user = await _userManager.FindByNameAsync(userInfo.Email);
+            if (user == null)
+            {
+                var identityUser = new IdentityUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Email = userInfo.Email,
+                    UserName = userInfo.Email
+                };
+
+                var createdResult = await _userManager.CreateAsync(identityUser);
+                if (!createdResult.Succeeded)
+                {
+                    return new AuthenticationResult
+                    {
+                        Errors = new[] { "Something went wrong" }
+                    };
+                }
+
+                return await GenerateAuthenticationResultForUserAsync(identityUser);
+            }
+
+            return await GenerateAuthenticationResultForUserAsync(user);
+        }
     }
 }

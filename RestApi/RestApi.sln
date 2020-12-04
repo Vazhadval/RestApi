@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi", "RestApi\RestApi.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.IntegrationTests", "RestApi.IntegrationTests\RestApi.IntegrationTests.csproj", "{8C5F62DB-CA01-4C9A-B4EB-CCA91E775F3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApi.Sdk", "RestApi.Sdk\RestApi.Sdk.csproj", "{B9C532EF-624F-4BBD-987E-17110D7796C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Sdk", "RestApi.Sdk\RestApi.Sdk.csproj", "{B9C532EF-624F-4BBD-987E-17110D7796C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApi.Sdk.Sample", "RestApi.Sdk.Sample\RestApi.Sdk.Sample.csproj", "{8F0646FD-CFAE-4F47-AF26-0AE68AC0A5AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Sdk.Sample", "RestApi.Sdk.Sample\RestApi.Sdk.Sample.csproj", "{8F0646FD-CFAE-4F47-AF26-0AE68AC0A5AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApi.Contracts", "RestApi.Contracts\RestApi.Contracts.csproj", "{C4AD23DD-724C-4E4C-9579-D148BF709087}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Contracts", "RestApi.Contracts\RestApi.Contracts.csproj", "{C4AD23DD-724C-4E4C-9579-D148BF709087}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApi.Web", "RestApi.Web\RestApi.Web.csproj", "{DAB4E8B8-2741-43DD-8CFC-F4DC6DA9E3A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C4AD23DD-724C-4E4C-9579-D148BF709087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4AD23DD-724C-4E4C-9579-D148BF709087}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4AD23DD-724C-4E4C-9579-D148BF709087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB4E8B8-2741-43DD-8CFC-F4DC6DA9E3A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB4E8B8-2741-43DD-8CFC-F4DC6DA9E3A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB4E8B8-2741-43DD-8CFC-F4DC6DA9E3A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB4E8B8-2741-43DD-8CFC-F4DC6DA9E3A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
