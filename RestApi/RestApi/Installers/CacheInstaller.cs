@@ -2,10 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using RestApi.Cache;
 using RestApi.Services;
+using StackExchange.Redis;
 
 namespace RestApi.Installers
 {
-    public class CacheInstaller:IInstaller
+    public class CacheInstaller : IInstaller
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
@@ -18,6 +19,7 @@ namespace RestApi.Installers
                 return;
             }
 
+            services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(redisCacheSettings.ConnectionString));
             services.AddStackExchangeRedisCache(options => options.Configuration = redisCacheSettings.ConnectionString);
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
         }
